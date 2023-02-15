@@ -1,3 +1,6 @@
+
+import javax.swing.JFileChooser;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -30,16 +33,23 @@ public class Interface extends javax.swing.JFrame {
         jFrame3 = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jPanel4 = new javax.swing.JPanel();
+        boximagen = new javax.swing.JComboBox<>();
+        txtimagen = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtarch = new javax.swing.JTextArea();
+        txtarchivo = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        txtconsola = new javax.swing.JTextArea();
+        btnguardar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        btnarboles = new javax.swing.JButton();
+        btnsig = new javax.swing.JButton();
+        btnauto = new javax.swing.JButton();
+        btntrans = new javax.swing.JButton();
+        btnabrir = new javax.swing.JButton();
+        btnanalizar = new javax.swing.JButton();
+        btngenerar = new javax.swing.JButton();
+        btnguardarcomo = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -79,88 +89,162 @@ public class Interface extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBackground(new java.awt.Color(255, 0, 153));
+        jPanel2.setBackground(new java.awt.Color(30, 36, 37));
         jPanel2.setLayout(null);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1070, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(jPanel3);
-        jPanel3.setBounds(10, 10, 1070, 40);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        boximagen.setBackground(new java.awt.Color(204, 102, 0));
+        boximagen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        boximagen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        boximagen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                boximagenActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBox1);
-        jComboBox1.setBounds(630, 60, 170, 26);
+        jPanel2.add(boximagen);
+        boximagen.setBounds(710, 80, 230, 40);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
+        txtimagen.setBackground(new java.awt.Color(185, 195, 196));
+        txtimagen.setForeground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout txtimagenLayout = new javax.swing.GroupLayout(txtimagen);
+        txtimagen.setLayout(txtimagenLayout);
+        txtimagenLayout.setHorizontalGroup(
+            txtimagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
+        txtimagenLayout.setVerticalGroup(
+            txtimagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 430, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel4);
-        jPanel4.setBounds(630, 170, 440, 420);
+        jPanel2.add(txtimagen);
+        txtimagen.setBounds(710, 150, 470, 430);
 
-        txtarch.setEditable(false);
-        txtarch.setColumns(20);
-        txtarch.setRows(5);
-        jScrollPane1.setViewportView(txtarch);
+        txtarchivo.setBackground(new java.awt.Color(185, 195, 196));
+        txtarchivo.setColumns(20);
+        txtarchivo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtarchivo.setForeground(new java.awt.Color(0, 0, 0));
+        txtarchivo.setRows(5);
+        jScrollPane1.setViewportView(txtarchivo);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 170, 430, 420);
+        jScrollPane1.setBounds(20, 150, 430, 370);
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        txtconsola.setBackground(new java.awt.Color(185, 195, 196));
+        txtconsola.setColumns(20);
+        txtconsola.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtconsola.setForeground(new java.awt.Color(0, 0, 0));
+        txtconsola.setRows(5);
+        jScrollPane2.setViewportView(txtconsola);
 
         jPanel2.add(jScrollPane2);
-        jScrollPane2.setBounds(20, 640, 1050, 120);
+        jScrollPane2.setBounds(20, 600, 1160, 160);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnguardar.setBackground(new java.awt.Color(204, 102, 0));
+        btnguardar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnguardar.setText("Guardar");
+        btnguardar.setBorder(null);
+        jPanel2.add(btnguardar);
+        btnguardar.setBounds(170, 80, 130, 40);
+
+        jPanel5.setBackground(new java.awt.Color(185, 195, 196));
+        jPanel5.setLayout(null);
+
+        btnarboles.setBackground(new java.awt.Color(204, 102, 0));
+        btnarboles.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnarboles.setText("Árboles");
+        btnarboles.setBorder(null);
+        btnarboles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnarbolesActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1);
-        jButton1.setBounds(170, 600, 120, 24);
+        jPanel5.add(btnarboles);
+        btnarboles.setBounds(20, 50, 184, 50);
 
-        jButton2.setText("jButton1");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnsig.setBackground(new java.awt.Color(204, 102, 0));
+        btnsig.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnsig.setText("Tabla de Siguientes");
+        btnsig.setBorder(null);
+        jPanel5.add(btnsig);
+        btnsig.setBounds(20, 160, 184, 50);
+
+        btnauto.setBackground(new java.awt.Color(204, 102, 0));
+        btnauto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnauto.setText("Tabla de autómata");
+        btnauto.setBorder(null);
+        jPanel5.add(btnauto);
+        btnauto.setBounds(20, 280, 184, 50);
+
+        btntrans.setBackground(new java.awt.Color(204, 102, 0));
+        btntrans.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btntrans.setText("Tabla de transiciones");
+        btntrans.setBorder(null);
+        jPanel5.add(btntrans);
+        btntrans.setBounds(20, 390, 184, 50);
+
+        jPanel2.add(jPanel5);
+        jPanel5.setBounds(470, 80, 220, 500);
+
+        btnabrir.setBackground(new java.awt.Color(204, 102, 0));
+        btnabrir.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnabrir.setText("Abrir");
+        btnabrir.setBorder(null);
+        btnabrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnabrirActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton2);
-        jButton2.setBounds(20, 600, 120, 24);
+        jPanel2.add(btnabrir);
+        btnabrir.setBounds(20, 80, 130, 40);
 
-        jButton3.setText("jButton3");
-        jPanel2.add(jButton3);
-        jButton3.setBounds(20, 60, 57, 24);
+        btnanalizar.setBackground(new java.awt.Color(204, 102, 0));
+        btnanalizar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnanalizar.setText("Analizar gramática");
+        btnanalizar.setBorder(null);
+        jPanel2.add(btnanalizar);
+        btnanalizar.setBounds(250, 540, 200, 40);
+
+        btngenerar.setBackground(new java.awt.Color(204, 102, 0));
+        btngenerar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btngenerar.setText("Generar autómata");
+        btngenerar.setBorder(null);
+        btngenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngenerarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btngenerar);
+        btngenerar.setBounds(20, 540, 210, 40);
+
+        btnguardarcomo.setBackground(new java.awt.Color(204, 102, 0));
+        btnguardarcomo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnguardarcomo.setText("Guardar \ncomo");
+        btnguardarcomo.setBorder(null);
+        jPanel2.add(btnguardarcomo);
+        btnguardarcomo.setBounds(320, 80, 130, 40);
+
+        jTextField1.setEditable(false);
+        jTextField1.setBackground(new java.awt.Color(204, 102, 0));
+        jTextField1.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setText("     E x  R e g a n  U S A C");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField1);
+        jTextField1.setBounds(0, 0, 1210, 60);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,19 +256,32 @@ public class Interface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void boximagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boximagenActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_boximagenActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       nuevo s = new nuevo();
-       s.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnarbolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnarbolesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnarbolesActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String texto="Hola amigos";
-       txtarch.setText(texto);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btngenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarActionPerformed
+        String consola="Bienvenidos al mundo";
+        txtconsola.setText(consola);
+    }//GEN-LAST:event_btngenerarActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void btnabrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirActionPerformed
+        JFileChooser abrir = new JFileChooser();
+        int op = abrir.showOpenDialog(this);
+        /*if (op==JFileChooser.APPROVE_OPTION){
+            
+            setArchivo(abrir.getSelectedFile().getPath());
+            txtexaminar.setText(getArchivo());
+        }*/
+    }//GEN-LAST:event_btnabrirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,20 +319,27 @@ public class Interface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> boximagen;
+    private javax.swing.JButton btnabrir;
+    private javax.swing.JButton btnanalizar;
+    private javax.swing.JButton btnarboles;
+    private javax.swing.JButton btnauto;
+    private javax.swing.JButton btngenerar;
+    private javax.swing.JButton btnguardar;
+    private javax.swing.JButton btnguardarcomo;
+    private javax.swing.JButton btnsig;
+    private javax.swing.JButton btntrans;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JFrame jFrame2;
     private javax.swing.JFrame jFrame3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea txtarch;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea txtarchivo;
+    private javax.swing.JTextArea txtconsola;
+    private javax.swing.JPanel txtimagen;
     // End of variables declaration//GEN-END:variables
 }
