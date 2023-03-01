@@ -1,5 +1,15 @@
 
+import analizador.lexico;
+import analizador.sintaxis;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -11,6 +21,7 @@ import javax.swing.JFileChooser;
  * @author pbara
  */
 public class Interface extends javax.swing.JFrame {
+    private File archivoSeleccionado;
 
     /**
      * Creates new form Interface
@@ -144,6 +155,11 @@ public class Interface extends javax.swing.JFrame {
         btnguardar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnguardar.setText("Guardar");
         btnguardar.setBorder(null);
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnguardar);
         btnguardar.setBounds(170, 80, 130, 40);
 
@@ -221,6 +237,11 @@ public class Interface extends javax.swing.JFrame {
         btnguardarcomo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnguardarcomo.setText("Guardar \ncomo");
         btnguardarcomo.setBorder(null);
+        btnguardarcomo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarcomoActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnguardarcomo);
         btnguardarcomo.setBounds(320, 80, 130, 40);
 
@@ -265,8 +286,35 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_btnarbolesActionPerformed
 
     private void btngenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarActionPerformed
-        String consola="Bienvenidos al mundo";
-        txtconsola.setText(consola);
+        String entrada = txtarchivo.getText();
+         try {
+            
+            lexico scanner = new lexico(new java.io.StringReader(entrada));
+            sintaxis analizador = new sintaxis(scanner);
+            analizador.parse();
+            System.out.println("Analisis finalizado");
+
+            // generar reporte de errores lexicos
+            if (scanner.erroresLexicos.isEmpty()) {
+                System.out.println("No se encontraron errores lexicos");
+            } else {
+                scanner.erroresLexicos.forEach((error) -> {
+                    System.out.println(error.getTipo() + "| " + error.getDescripcion() + "| " + error.getLinea() + "| " + error.getColumna());
+                });
+            }
+            
+            // generar reporte de errores sintacticos
+            if (analizador.erroresSintacticos.isEmpty()) {
+                System.out.println("No se encontraron errores sintacticos");
+            } else {
+                analizador.erroresSintacticos.forEach((error) -> {
+                    System.out.println(error.getTipo() + "| " + error.getDescripcion() + "| " + error.getLinea() + "| " + error.getColumna());
+                });
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btngenerarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -274,14 +322,65 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnabrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirActionPerformed
-        JFileChooser abrir = new JFileChooser();
-        int op = abrir.showOpenDialog(this);
-        /*if (op==JFileChooser.APPROVE_OPTION){
-            
-            setArchivo(abrir.getSelectedFile().getPath());
-            txtexaminar.setText(getArchivo());
-        }*/
+    JFileChooser chooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo OLC (*.olc)", "olc");
+    chooser.setFileFilter(filter);
+    int resultado = chooser.showOpenDialog(null);
+    if (resultado == JFileChooser.APPROVE_OPTION) {
+        archivoSeleccionado = chooser.getSelectedFile();
+        try {
+            FileReader fr = new FileReader(archivoSeleccionado);
+            BufferedReader br = new BufferedReader(fr);
+            String contenidoDelArchivo = "";
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                contenidoDelArchivo += linea + "\n";
+            }
+            br.close();
+            txtarchivo.setText(""); // Limpiar la text area
+            txtarchivo.append(contenidoDelArchivo);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
     }//GEN-LAST:event_btnabrirActionPerformed
+
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+      String contenido = txtarchivo.getText();
+      String nombreArchivo = archivoSeleccionado.getName();
+      File archivoAGuardar = new File(archivoSeleccionado.getAbsolutePath());
+      try {
+        FileWriter fw = new FileWriter(archivoAGuardar, false); // El segundo parámetro indica si se permite la sobrescritura
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(contenido);
+        bw.close();
+        JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente.");
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnguardarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarcomoActionPerformed
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setFileFilter(new FileNameExtensionFilter("Archivo OLC (*.olc)", "olc"));
+    int seleccion = fileChooser.showSaveDialog(null);
+
+    if (seleccion == JFileChooser.APPROVE_OPTION) {
+        try {
+            String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!rutaArchivo.endsWith(".olc")) {
+                rutaArchivo += ".olc";
+            }
+            BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo));
+            writer.write(txtarchivo.getText());
+            writer.close();
+            JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente.");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al guardar el archivo.");
+            e.printStackTrace();
+        }
+    }
+    }//GEN-LAST:event_btnguardarcomoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -342,4 +441,8 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextArea txtconsola;
     private javax.swing.JPanel txtimagen;
     // End of variables declaration//GEN-END:variables
+
+
+
 }
+
