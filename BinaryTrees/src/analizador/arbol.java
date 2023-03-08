@@ -12,4 +12,25 @@ public class arbol {
     private String dato;
     private arbol hijoI;
     private arbol hijoD;
+
+    public arbol(String dato) {
+        this.dato = dato;
+    }
+
+    public arbol getHijoI() {
+        return hijoI;
+    }
+
+    public void setHijoI(arbol hijoI) {
+        this.hijoI = hijoI;
+    }
+
+    public arbol getHijoD() {
+        return hijoD;
+    }
+
+    public void setHijoD(arbol hijoD) {
+        this.hijoD = hijoD;
+    }
+    
 }
