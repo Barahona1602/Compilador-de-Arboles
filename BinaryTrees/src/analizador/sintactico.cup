@@ -24,17 +24,45 @@ parser code
 
 :}
 
-terminal CONJ, DOSPUNTOS, GUION, MENOR, COMA, TILDE, CORCHETE_ABIERTO, CORCHETE_CERRADO, CONCATENACION, DISYUNCION, ASTERISCO, SUMA, INTERROGACION, 
-PORCENTAJE, PUNTO_Y_COMA, IDENTIFICADOR, MINUSCULAS, MAYUSCULAS, NUMEROS, CARACTERES;
+terminal CONJ, DOSPUNTOS, GUION, MAYOR, COMA, TILDE, LLAVEA, LLAVEC, CONCATENACION, DISYUNCION, ASTERISCO, SUMA, INTERROGACION, 
+PORCENTAJE, PUNTO_Y_COMA, IDENTIFICADOR, MINUSCULAS, MAYUSCULAS, NUMEROS, CARACTERES, CARACTER, CADENA;
 
-non terminal Codigo;
-non terminal Lexema;
+non terminal codigo;
+non terminal conjuntos, comprobacion, instruccion, regex, notacion, agrupacion, singular, evaluacion;
 
-start with Codigo;
+start with codigo;
 
-Codigo::= Codigo Lexema | 
-                Lexema;
+codigo::= LLAVEA conjuntos PORCENTAJE PORCENTAJE PORCENTAJE PORCENTAJE comprobacion LLAVEC;
 
-Lexema::= CONJ| DOSPUNTOS| GUION| MENOR| COMA| TILDE| CORCHETE_ABIERTO| CORCHETE_CERRADO|
- CONCATENACION| DISYUNCION| ASTERISCO| SUMA| INTERROGACION| PORCENTAJE| PUNTO_Y_COMA| IDENTIFICADOR| 
-MINUSCULAS| MAYUSCULAS| NUMEROS| CARACTERES;
+conjuntos::= conjuntos instruccion | 
+                    instruccion;
+
+instruccion::= CONJ DOSPUNTOS IDENTIFICADOR GUION MAYOR notacion PUNTO_Y_COMA | 
+                        IDENTIFICADOR GUION MAYOR regex PUNTO_Y_COMA;
+
+notacion::= MAYUSCULAS TILDE MAYUSCULAS |
+                MINUSCULAS TILDE MINUSCULAS |
+                NUMEROS TILDE NUMEROS  |    
+                CARACTERES TILDE CARACTERES |
+                agrupacion;
+
+agrupacion::= agrupacion COMA singular |
+                    singular;
+
+singular::= MAYUSCULAS |
+                MINUSCULAS |
+                CARACTERES |
+                NUMEROS;
+
+regex::= CONCATENACION regex regex |
+            DISYUNCION regex regex |
+            ASTERISCO regex |
+            SUMA regex |
+            INTERROGACION regex |
+            CARACTER |
+            LLAVEA IDENTIFICADOR LLAVEC;
+
+comprobacion::= comprobacion evaluacion |
+                        evaluacion;
+
+evaluacion::= IDENTIFICADOR DOSPUNTOS CADENA PUNTO_Y_COMA;
