@@ -169,8 +169,11 @@ public class sintaxis extends java_cup.runtime.lr_parser {
   public int error_sym() {return 1;}
 
 
-//Codigo visible
-    
+
+    /// Arboles 
+    public ArrayList<AFD> arboles = new ArrayList <>();
+
+
     ///  declarar un arraylist para los errores sintacticos 
     public  ArrayList<Excepcion> erroresSintacticos = new ArrayList<Excepcion>();
 
@@ -255,6 +258,9 @@ class CUP$sintaxis$actions {
           case 4: // instruccion ::= CONJ DOSPUNTOS IDENTIFICADOR GUION MAYOR notacion PUNTO_Y_COMA 
             {
               Object RESULT =null;
+		int holaleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-4)).left;
+		int holaright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-4)).right;
+		String hola = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-4)).value;
 
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-6)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
@@ -264,7 +270,15 @@ class CUP$sintaxis$actions {
           case 5: // instruccion ::= IDENTIFICADOR GUION MAYOR regex PUNTO_Y_COMA 
             {
               Object RESULT =null;
-
+		int holaleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-4)).left;
+		int holaright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-4)).right;
+		String hola = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-4)).value;
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).right;
+		Object a = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).value;
+		
+                             arboles.add(new AFD((arbol)a));
+                            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("instruccion",3, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-4)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;
@@ -372,7 +386,21 @@ class CUP$sintaxis$actions {
           case 17: // regex ::= CONCATENACION regex regex 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.peek()).value;
+		
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    padre.setHijoD((arbol)c);
+                    RESULT = padre;
+            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;
@@ -381,7 +409,21 @@ class CUP$sintaxis$actions {
           case 18: // regex ::= DISYUNCION regex regex 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).right;
+		Object c = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.peek()).value;
+		
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    padre.setHijoD((arbol)c);
+                    RESULT = padre;
+            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;
@@ -390,7 +432,17 @@ class CUP$sintaxis$actions {
           case 19: // regex ::= ASTERISCO regex 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.peek()).value;
+		
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    RESULT = padre;
+            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;
@@ -399,7 +451,17 @@ class CUP$sintaxis$actions {
           case 20: // regex ::= SUMA regex 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.peek()).value;
+		
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    RESULT = padre;
+            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;
@@ -408,7 +470,17 @@ class CUP$sintaxis$actions {
           case 21: // regex ::= INTERROGACION regex 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).value;
+		int bleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).right;
+		Object b = (Object)((java_cup.runtime.Symbol) CUP$sintaxis$stack.peek()).value;
+		
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    RESULT = padre;
+            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;
@@ -417,7 +489,15 @@ class CUP$sintaxis$actions {
           case 22: // regex ::= CARACTER 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.peek()).value;
+		
+                    arbol hoja=new arbol(a);
+                    hoja.setHoja(true);
+                    hoja.setAnulable(false);
+                    RESULT = hoja;
+            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;
@@ -426,7 +506,15 @@ class CUP$sintaxis$actions {
           case 23: // regex ::= LLAVEA IDENTIFICADOR LLAVEC 
             {
               Object RESULT =null;
-
+		int aleft = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-1)).value;
+		
+                    arbol hoja=new arbol(a);
+                    hoja.setHoja(true);
+                    hoja.setAnulable(false);
+                    RESULT = hoja;
+            
               CUP$sintaxis$result = parser.getSymbolFactory().newSymbol("regex",4, ((java_cup.runtime.Symbol)CUP$sintaxis$stack.elementAt(CUP$sintaxis$top-2)), ((java_cup.runtime.Symbol)CUP$sintaxis$stack.peek()), RESULT);
             }
           return CUP$sintaxis$result;

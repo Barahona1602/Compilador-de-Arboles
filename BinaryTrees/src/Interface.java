@@ -1,14 +1,27 @@
 
 import analizador.lexico;
 import analizador.sintaxis;
+import java.awt.BorderLayout;
+import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
@@ -44,8 +57,6 @@ public class Interface extends javax.swing.JFrame {
         jFrame3 = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        boximagen = new javax.swing.JComboBox<>();
-        txtimagen = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtarchivo = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -54,13 +65,16 @@ public class Interface extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         btnarboles = new javax.swing.JButton();
         btnsig = new javax.swing.JButton();
-        btnauto = new javax.swing.JButton();
+        btnafd = new javax.swing.JButton();
+        btnerrores = new javax.swing.JButton();
         btntrans = new javax.swing.JButton();
+        btnafnd = new javax.swing.JButton();
         btnabrir = new javax.swing.JButton();
         btnanalizar = new javax.swing.JButton();
         btngenerar = new javax.swing.JButton();
-        btnguardarcomo = new javax.swing.JButton();
+        btnnuevo = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
+        btnguardarcomo1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -103,34 +117,6 @@ public class Interface extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(30, 36, 37));
         jPanel2.setLayout(null);
 
-        boximagen.setBackground(new java.awt.Color(204, 102, 0));
-        boximagen.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        boximagen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        boximagen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boximagenActionPerformed(evt);
-            }
-        });
-        jPanel2.add(boximagen);
-        boximagen.setBounds(710, 80, 230, 40);
-
-        txtimagen.setBackground(new java.awt.Color(185, 195, 196));
-        txtimagen.setForeground(new java.awt.Color(0, 0, 0));
-
-        javax.swing.GroupLayout txtimagenLayout = new javax.swing.GroupLayout(txtimagen);
-        txtimagen.setLayout(txtimagenLayout);
-        txtimagenLayout.setHorizontalGroup(
-            txtimagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
-        );
-        txtimagenLayout.setVerticalGroup(
-            txtimagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 430, Short.MAX_VALUE)
-        );
-
-        jPanel2.add(txtimagen);
-        txtimagen.setBounds(710, 150, 470, 430);
-
         txtarchivo.setBackground(new java.awt.Color(185, 195, 196));
         txtarchivo.setColumns(20);
         txtarchivo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -139,7 +125,7 @@ public class Interface extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtarchivo);
 
         jPanel2.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 150, 430, 370);
+        jScrollPane1.setBounds(20, 150, 910, 370);
 
         txtconsola.setBackground(new java.awt.Color(185, 195, 196));
         txtconsola.setColumns(20);
@@ -161,7 +147,7 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnguardar);
-        btnguardar.setBounds(170, 80, 130, 40);
+        btnguardar.setBounds(290, 80, 130, 40);
 
         jPanel5.setBackground(new java.awt.Color(185, 195, 196));
         jPanel5.setLayout(null);
@@ -176,31 +162,70 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jPanel5.add(btnarboles);
-        btnarboles.setBounds(20, 50, 184, 50);
+        btnarboles.setBounds(20, 20, 184, 50);
 
         btnsig.setBackground(new java.awt.Color(204, 102, 0));
         btnsig.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnsig.setText("Tabla de Siguientes");
         btnsig.setBorder(null);
+        btnsig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsigActionPerformed(evt);
+            }
+        });
         jPanel5.add(btnsig);
-        btnsig.setBounds(20, 160, 184, 50);
+        btnsig.setBounds(20, 100, 184, 50);
 
-        btnauto.setBackground(new java.awt.Color(204, 102, 0));
-        btnauto.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnauto.setText("Tabla de autómata");
-        btnauto.setBorder(null);
-        jPanel5.add(btnauto);
-        btnauto.setBounds(20, 280, 184, 50);
+        btnafd.setBackground(new java.awt.Color(204, 102, 0));
+        btnafd.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnafd.setText("AFD");
+        btnafd.setBorder(null);
+        btnafd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnafdActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnafd);
+        btnafd.setBounds(20, 260, 184, 50);
+
+        btnerrores.setBackground(new java.awt.Color(204, 102, 0));
+        btnerrores.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnerrores.setText("Errores");
+        btnerrores.setBorder(null);
+        btnerrores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnerroresActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnerrores);
+        btnerrores.setBounds(20, 420, 184, 50);
 
         btntrans.setBackground(new java.awt.Color(204, 102, 0));
         btntrans.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btntrans.setText("Tabla de transiciones");
         btntrans.setBorder(null);
+        btntrans.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntransActionPerformed(evt);
+            }
+        });
         jPanel5.add(btntrans);
-        btntrans.setBounds(20, 390, 184, 50);
+        btntrans.setBounds(20, 180, 184, 50);
+
+        btnafnd.setBackground(new java.awt.Color(204, 102, 0));
+        btnafnd.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnafnd.setText("AFND");
+        btnafnd.setBorder(null);
+        btnafnd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnafndActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnafnd);
+        btnafnd.setBounds(20, 340, 184, 50);
 
         jPanel2.add(jPanel5);
-        jPanel5.setBounds(470, 80, 220, 500);
+        jPanel5.setBounds(950, 80, 220, 500);
 
         btnabrir.setBackground(new java.awt.Color(204, 102, 0));
         btnabrir.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -212,14 +237,14 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnabrir);
-        btnabrir.setBounds(20, 80, 130, 40);
+        btnabrir.setBounds(70, 80, 130, 40);
 
         btnanalizar.setBackground(new java.awt.Color(204, 102, 0));
         btnanalizar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnanalizar.setText("Analizar gramática");
         btnanalizar.setBorder(null);
         jPanel2.add(btnanalizar);
-        btnanalizar.setBounds(250, 540, 200, 40);
+        btnanalizar.setBounds(480, 540, 200, 40);
 
         btngenerar.setBackground(new java.awt.Color(204, 102, 0));
         btngenerar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -231,19 +256,19 @@ public class Interface extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btngenerar);
-        btngenerar.setBounds(20, 540, 210, 40);
+        btngenerar.setBounds(230, 540, 210, 40);
 
-        btnguardarcomo.setBackground(new java.awt.Color(204, 102, 0));
-        btnguardarcomo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnguardarcomo.setText("Guardar \ncomo");
-        btnguardarcomo.setBorder(null);
-        btnguardarcomo.addActionListener(new java.awt.event.ActionListener() {
+        btnnuevo.setBackground(new java.awt.Color(204, 102, 0));
+        btnnuevo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnnuevo.setText("Nuevo");
+        btnnuevo.setBorder(null);
+        btnnuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnguardarcomoActionPerformed(evt);
+                btnnuevoActionPerformed(evt);
             }
         });
-        jPanel2.add(btnguardarcomo);
-        btnguardarcomo.setBounds(320, 80, 130, 40);
+        jPanel2.add(btnnuevo);
+        btnnuevo.setBounds(740, 80, 130, 40);
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(204, 102, 0));
@@ -258,14 +283,25 @@ public class Interface extends javax.swing.JFrame {
         jPanel2.add(jTextField1);
         jTextField1.setBounds(0, 0, 1210, 60);
 
+        btnguardarcomo1.setBackground(new java.awt.Color(204, 102, 0));
+        btnguardarcomo1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnguardarcomo1.setText("Guardar \ncomo");
+        btnguardarcomo1.setBorder(null);
+        btnguardarcomo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarcomo1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnguardarcomo1);
+        btnguardarcomo1.setBounds(520, 80, 130, 40);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1209, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,39 +313,111 @@ public class Interface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void boximagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boximagenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boximagenActionPerformed
-
     private void btnarbolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnarbolesActionPerformed
-        // TODO add your handling code here:
+       JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("src/ARBOLES_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(selectedFile));
+                JLabel label = new JLabel(imageIcon);
+                JScrollPane scrollPane = new JScrollPane(label);
+                scrollPane.setPreferredSize(new Dimension(1000, 800));
+                JOptionPane.showMessageDialog(null, scrollPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
+
     }//GEN-LAST:event_btnarbolesActionPerformed
 
     private void btngenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarActionPerformed
         String entrada = txtarchivo.getText();
-         try {
-            
+        StringBuilder htmlTable = new StringBuilder();
+        try {
             lexico scanner = new lexico(new java.io.StringReader(entrada));
             sintaxis analizador = new sintaxis(scanner);
             analizador.parse();
-            System.out.println("Analisis finalizado");
+            txtconsola.setText("Analisis finalizado");
 
             // generar reporte de errores lexicos
-            if (scanner.erroresLexicos.isEmpty()) {
-                System.out.println("No se encontraron errores lexicos");
-            } else {
+            if (!scanner.erroresLexicos.isEmpty() || !analizador.erroresSintacticos.isEmpty()) {
+            htmlTable.append("<html>\n");
+            htmlTable.append("<head>\n");
+            htmlTable.append("<title>Errores</title>\n");
+            htmlTable.append("<style>\n");
+            htmlTable.append("table {\n");
+            htmlTable.append("  font-family: Arial, sans-serif;\n");
+            htmlTable.append("  border-collapse: collapse;\n");
+            htmlTable.append("  width: 100%;\n");
+            htmlTable.append("}\n");
+            htmlTable.append("th {\n");
+            htmlTable.append("  font-weight: bold;\n");
+            htmlTable.append("  background-color: #c5e1a5;\n");
+            htmlTable.append("}\n");
+            htmlTable.append("td, th {\n");
+            htmlTable.append("  border: 1px solid #ddd;\n");
+            htmlTable.append("  text-align: left;\n");
+            htmlTable.append("  padding: 8px;\n");
+            htmlTable.append("  font-size: 12px;\n");
+            htmlTable.append("}\n");
+            htmlTable.append("</style>\n");
+            htmlTable.append("</head>\n");
+            htmlTable.append("<body>\n");
+            htmlTable.append("<h1 style=\"font-family: Arial; font-size: 20px;\">Errores</h1>\n");
+
+            if (!scanner.erroresLexicos.isEmpty()) {
+                htmlTable.append("<h2 style=\"font-family: Arial; font-size: 16px;\">Errores léxicos</h2>\n");
+                htmlTable.append("<table>\n");
+                htmlTable.append("<tr><th>Tipo</th><th>Descripción</th><th>Línea</th><th>Columna</th></tr>\n");
                 scanner.erroresLexicos.forEach((error) -> {
-                    System.out.println(error.getTipo() + "| " + error.getDescripcion() + "| " + error.getLinea() + "| " + error.getColumna());
+                    htmlTable.append("<tr>");
+                    htmlTable.append("<td>").append(error.getTipo()).append("</td>");
+                    htmlTable.append("<td>").append(error.getDescripcion()).append("</td>");
+                    htmlTable.append("<td>").append(error.getLinea()).append("</td>");
+                    htmlTable.append("<td>").append(error.getColumna()).append("</td>");
+                    htmlTable.append("</tr>\n");
                 });
+                htmlTable.append("</table>\n");
             }
-            
-            // generar reporte de errores sintacticos
-            if (analizador.erroresSintacticos.isEmpty()) {
-                System.out.println("No se encontraron errores sintacticos");
-            } else {
+
+            if (!analizador.erroresSintacticos.isEmpty()) {
+                htmlTable.append("<h2 style=\"font-family: Arial; font-size: 16px;\">Errores sintácticos</h2>\n");
+                htmlTable.append("<table>\n");
+                htmlTable.append("<tr><th>Tipo</th><th>Descripción</th><th>Línea</th><th>Columna</th></tr>\n");
                 analizador.erroresSintacticos.forEach((error) -> {
-                    System.out.println(error.getTipo() + "| " + error.getDescripcion() + "| " + error.getLinea() + "| " + error.getColumna());
+                    htmlTable.append("<tr>");
+                    htmlTable.append("<td>").append(error.getTipo()).append("</td>");
+                    htmlTable.append("<td>").append(error.getDescripcion()).append("</td>");
+                    htmlTable.append("<td>").append(error.getLinea()).append("</td>");
+                    htmlTable.append("<td>").append(error.getColumna()).append("</td>");
+                    htmlTable.append("</tr>\n");
                 });
+                htmlTable.append("</table>\n");
+            }
+
+            htmlTable.append("</body>\n");
+            htmlTable.append("</html>");
+            }
+
+            if (htmlTable.length() > 0) {
+            String reporteErrores = htmlTable.toString();
+            try {
+                FileWriter writer = new FileWriter("src/ERRORES_202109715/reporteErrores.html");
+                writer.write(reporteErrores);
+                writer.close();
+                System.out.println("Archivo HTML generado con éxito.");
+            } catch (IOException e) {
+                System.out.println("Ocurrió un error al guardar el archivo HTML: " + e.getMessage());
+            }
+            } else {
+                System.out.println("No se encontraron errores léxicos ni sintácticos");
             }
 
         } catch (Exception e) {
@@ -360,27 +468,108 @@ public class Interface extends javax.swing.JFrame {
       }
     }//GEN-LAST:event_btnguardarActionPerformed
 
-    private void btnguardarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarcomoActionPerformed
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setFileFilter(new FileNameExtensionFilter("Archivo OLC (*.olc)", "olc"));
-    int seleccion = fileChooser.showSaveDialog(null);
+    private void btnnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnuevoActionPerformed
+    String contenido = txtarchivo.getText();
+      String nombreArchivo = archivoSeleccionado.getName();
+      File archivoAGuardar = new File(archivoSeleccionado.getAbsolutePath());
+      try {
+        FileWriter fw = new FileWriter(archivoAGuardar, false); // El segundo parámetro indica si se permite la sobrescritura
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(contenido);
+        bw.close();
+        JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente.");
+        txtarchivo.setText("");
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+            
+    }//GEN-LAST:event_btnnuevoActionPerformed
 
-    if (seleccion == JFileChooser.APPROVE_OPTION) {
-        try {
-            String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
-            if (!rutaArchivo.endsWith(".olc")) {
-                rutaArchivo += ".olc";
+    private void btnguardarcomo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarcomo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnguardarcomo1ActionPerformed
+
+    private void btnsigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsigActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("src/SIGUIENTES_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(selectedFile));
+                JLabel label = new JLabel(imageIcon);
+                JScrollPane scrollPane = new JScrollPane(label);
+                scrollPane.setPreferredSize(new Dimension(1000, 800));
+                JOptionPane.showMessageDialog(null, scrollPane);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo));
-            writer.write(txtarchivo.getText());
-            writer.close();
-            JOptionPane.showMessageDialog(null, "Archivo guardado exitosamente.");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Error al guardar el archivo.");
-            e.printStackTrace();
         }
+    }//GEN-LAST:event_btnsigActionPerformed
+
+    private void btntransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntransActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("src/TRANSICIONES_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(selectedFile));
+                JLabel label = new JLabel(imageIcon);
+                JScrollPane scrollPane = new JScrollPane(label);
+                scrollPane.setPreferredSize(new Dimension(1000, 800));
+                JOptionPane.showMessageDialog(null, scrollPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btntransActionPerformed
+
+    private void btnafdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnafdActionPerformed
+       JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("src/AFD_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(selectedFile));
+                JLabel label = new JLabel(imageIcon);
+                JScrollPane scrollPane = new JScrollPane(label);
+                scrollPane.setPreferredSize(new Dimension(1000, 800));
+                JOptionPane.showMessageDialog(null, scrollPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnafdActionPerformed
+
+    private void btnerroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnerroresActionPerformed
+         try {
+            File file = new File("src/ERRORES_202109715/reporteErrores.html");
+            JEditorPane editorPane = new JEditorPane();
+            editorPane.setPage(file.toURI().toURL());
+            JScrollPane scrollPane = new JScrollPane(editorPane);
+            scrollPane.setPreferredSize(new Dimension(1100, 400));
+            JFrame frame = new JFrame("Errores");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.add(scrollPane);
+            frame.pack();
+            frame.setVisible(true);
+        } catch (IOException ex) {
+            System.err.println("Error abriendo archivo: " + ex.getMessage());
+            txtconsola.setText("No hay errores en el árbol");
     }
-    }//GEN-LAST:event_btnguardarcomoActionPerformed
+    }//GEN-LAST:event_btnerroresActionPerformed
+
+    private void btnafndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnafndActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnafndActionPerformed
 
     /**
      * @param args the command line arguments
@@ -418,14 +607,16 @@ public class Interface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> boximagen;
     private javax.swing.JButton btnabrir;
+    private javax.swing.JButton btnafd;
+    private javax.swing.JButton btnafnd;
     private javax.swing.JButton btnanalizar;
     private javax.swing.JButton btnarboles;
-    private javax.swing.JButton btnauto;
+    private javax.swing.JButton btnerrores;
     private javax.swing.JButton btngenerar;
     private javax.swing.JButton btnguardar;
-    private javax.swing.JButton btnguardarcomo;
+    private javax.swing.JButton btnguardarcomo1;
+    private javax.swing.JButton btnnuevo;
     private javax.swing.JButton btnsig;
     private javax.swing.JButton btntrans;
     private javax.swing.JFrame jFrame1;
@@ -439,7 +630,6 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextArea txtarchivo;
     private javax.swing.JTextArea txtconsola;
-    private javax.swing.JPanel txtimagen;
     // End of variables declaration//GEN-END:variables
 
 

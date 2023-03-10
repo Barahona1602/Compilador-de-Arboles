@@ -7,8 +7,11 @@ import Errores.Excepcion;           // importar la clase de errores
 
 //PARSER 
 parser code
-{://Codigo visible
-    
+{:
+    /// Arboles 
+    public ArrayList<AFD> arboles = new ArrayList <>();
+
+
     ///  declarar un arraylist para los errores sintacticos 
     public  ArrayList<Excepcion> erroresSintacticos = new ArrayList<Excepcion>();
 
@@ -24,7 +27,7 @@ parser code
 
 :}
 
-terminal CONJ, DOSPUNTOS, GUION, MAYOR, COMA, TILDE, LLAVEA, LLAVEC, CONCATENACION, DISYUNCION, ASTERISCO, SUMA, INTERROGACION, 
+terminal String CONJ, DOSPUNTOS, GUION, MAYOR, COMA, TILDE, LLAVEA, LLAVEC, CONCATENACION, DISYUNCION, ASTERISCO, SUMA, INTERROGACION, 
 PORCENTAJE, PUNTO_Y_COMA, IDENTIFICADOR, MINUSCULAS, MAYUSCULAS, NUMEROS, CARACTERES, CARACTER, CADENA;
 
 non terminal codigo;
@@ -37,8 +40,10 @@ codigo::= LLAVEA conjuntos PORCENTAJE PORCENTAJE PORCENTAJE PORCENTAJE comprobac
 conjuntos::= conjuntos instruccion | 
                     instruccion;
 
-instruccion::= CONJ DOSPUNTOS IDENTIFICADOR GUION MAYOR notacion PUNTO_Y_COMA | 
-                        IDENTIFICADOR GUION MAYOR regex PUNTO_Y_COMA;
+instruccion::= CONJ DOSPUNTOS IDENTIFICADOR:hola GUION MAYOR notacion PUNTO_Y_COMA | 
+                        IDENTIFICADOR:hola GUION MAYOR regex:a PUNTO_Y_COMA {:
+                             arboles.add(new AFD((arbol)a));
+                            :};
 
 notacion::= MAYUSCULAS TILDE MAYUSCULAS |
                 MINUSCULAS TILDE MINUSCULAS |
@@ -54,13 +59,45 @@ singular::= MAYUSCULAS |
                 CARACTERES |
                 NUMEROS;
 
-regex::= CONCATENACION regex regex |
-            DISYUNCION regex regex |
-            ASTERISCO regex |
-            SUMA regex |
-            INTERROGACION regex |
-            CARACTER |
-            LLAVEA IDENTIFICADOR LLAVEC;
+regex::= CONCATENACION:a regex:b regex:c {:
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    padre.setHijoD((arbol)c);
+                    RESULT = padre;
+            :} |
+            DISYUNCION:a regex:b regex:c {:
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    padre.setHijoD((arbol)c);
+                    RESULT = padre;
+            :} |
+            ASTERISCO:a regex:b {:
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    RESULT = padre;
+            :} |
+            SUMA:a regex:b {:
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    RESULT = padre;
+            :} |
+            INTERROGACION:a regex:b {:
+                    arbol padre = new arbol(a);
+                    padre.setHijoI((arbol)b);
+                    RESULT = padre;
+            :} |
+            CARACTER:a {:
+                    arbol hoja=new arbol(a);
+                    hoja.setHoja(true);
+                    hoja.setAnulable(false);
+                    RESULT = hoja;
+            :} |
+            LLAVEA IDENTIFICADOR:a LLAVEC {:
+                    arbol hoja=new arbol(a);
+                    hoja.setHoja(true);
+                    hoja.setAnulable(false);
+                    RESULT = hoja;
+            :};
 
 comprobacion::= comprobacion evaluacion |
                         evaluacion;

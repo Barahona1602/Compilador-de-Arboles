@@ -65,31 +65,31 @@ CARACTERES = [!-,.-\/:-=?-@\[-`{-}]
 <YYINITIAL> {COMILLAS} { }
 <YYINITIAL> {SPACE}     { }
 <YYINITIAL> {ENTER}     { }
-<YYINITIAL> {COMENTARIOMULTI}     {System.out.println(yytext()) ; }
-<YYINITIAL> {COMENTARIOSIMPLE}     {System.out.println(yytext()) ; }
+<YYINITIAL> {COMENTARIOMULTI}     { }
+<YYINITIAL> {COMENTARIOSIMPLE}     { }
 
-<YYINITIAL> {LLAVEA} {System.out.println(yytext()) ;  return new Symbol(sym.LLAVEA, yyline, yycolumn, yytext()); }
-<YYINITIAL> {LLAVEC} {System.out.println(yytext()) ;  return new Symbol(sym.LLAVEC, yyline, yycolumn, yytext()); }
-<YYINITIAL> {CONJ}  {System.out.println(yytext()) ;   return new Symbol(sym.CONJ, yyline, yycolumn,yytext());  }
-<YYINITIAL> {DOSPUNTOS} {System.out.println(yytext()) ;  return new Symbol(sym.DOSPUNTOS, yyline, yycolumn, yytext()); }
-<YYINITIAL> {GUION}  {System.out.println(yytext()) ;  return new Symbol(sym.GUION, yyline, yycolumn, yytext()); }
-<YYINITIAL> {MAYOR}  {System.out.println(yytext()) ;  return new Symbol(sym.MAYOR, yyline, yycolumn, yytext()); }
-<YYINITIAL> {COMA} {System.out.println(yytext()) ;  return new Symbol(sym.COMA, yyline, yycolumn, yytext()); }
-<YYINITIAL> {TILDE}   {System.out.println(yytext()) ;  return new Symbol(sym.TILDE, yyline, yycolumn, yytext()); }
-<YYINITIAL> {CONCATENACION}    {System.out.println(yytext()) ;  return new Symbol(sym.CONCATENACION, yyline, yycolumn, yytext()); }
-<YYINITIAL> {DISYUNCION}       {System.out.println(yytext()) ;  return new Symbol(sym.DISYUNCION, yyline, yycolumn, yytext()); }
-<YYINITIAL> {ASTERISCO}        {System.out.println(yytext()) ;  return new Symbol(sym.ASTERISCO, yyline, yycolumn, yytext()); }
-<YYINITIAL> {SUMA}             {System.out.println(yytext()) ;  return new Symbol(sym.SUMA, yyline, yycolumn, yytext()); }
-<YYINITIAL> {INTERROGACION}    {System.out.println(yytext()) ;  return new Symbol(sym.INTERROGACION, yyline, yycolumn, yytext()); }
-<YYINITIAL> {PORCENTAJE}       {System.out.println(yytext()) ;  return new Symbol(sym.PORCENTAJE, yyline, yycolumn, yytext()); }
-<YYINITIAL> {PUNTO_Y_COMA}     {System.out.println(yytext()) ;  return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext()); }
-<YYINITIAL> {CARACTER}     {System.out.println(yytext()) ;  return new Symbol(sym.CARACTER, yyline, yycolumn, yytext()); }
-<YYINITIAL> {MINUSCULAS}             {System.out.println(yytext()) ;  return new Symbol(sym.MINUSCULAS, yyline, yycolumn, yytext()); }
-<YYINITIAL> {MAYUSCULAS}    {System.out.println(yytext()) ;  return new Symbol(sym.MAYUSCULAS, yyline, yycolumn, yytext()); }
-<YYINITIAL> {NUMEROS}       {System.out.println(yytext()) ;  return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()); }
-<YYINITIAL> {IDENTIFICADOR}     {System.out.println(yytext()) ;  return new Symbol(sym.IDENTIFICADOR, yyline, yycolumn, yytext()); }
-<YYINITIAL> {CADENA}             {System.out.println(yytext()) ;  return new Symbol(sym.CADENA, yyline, yycolumn, yytext()); }
-<YYINITIAL> {CARACTERES}     {System.out.println(yytext()) ;  return new Symbol(sym.CARACTERES, yyline, yycolumn, yytext()); }
+<YYINITIAL> {LLAVEA} {  return new Symbol(sym.LLAVEA, yyline, yycolumn, yytext()); }
+<YYINITIAL> {LLAVEC} {  return new Symbol(sym.LLAVEC, yyline, yycolumn, yytext()); }
+<YYINITIAL> {CONJ}  {   return new Symbol(sym.CONJ, yyline, yycolumn,yytext());  }
+<YYINITIAL> {DOSPUNTOS} {  return new Symbol(sym.DOSPUNTOS, yyline, yycolumn, yytext()); }
+<YYINITIAL> {GUION}  {  return new Symbol(sym.GUION, yyline, yycolumn, yytext()); }
+<YYINITIAL> {MAYOR}  {  return new Symbol(sym.MAYOR, yyline, yycolumn, yytext()); }
+<YYINITIAL> {COMA} {  return new Symbol(sym.COMA, yyline, yycolumn, yytext()); }
+<YYINITIAL> {TILDE}   {  return new Symbol(sym.TILDE, yyline, yycolumn, yytext()); }
+<YYINITIAL> {CONCATENACION}    {  return new Symbol(sym.CONCATENACION, yyline, yycolumn, yytext()); }
+<YYINITIAL> {DISYUNCION}       {  return new Symbol(sym.DISYUNCION, yyline, yycolumn, yytext()); }
+<YYINITIAL> {ASTERISCO}        {  return new Symbol(sym.ASTERISCO, yyline, yycolumn, yytext()); }
+<YYINITIAL> {SUMA}             {  return new Symbol(sym.SUMA, yyline, yycolumn, yytext()); }
+<YYINITIAL> {INTERROGACION}    {  return new Symbol(sym.INTERROGACION, yyline, yycolumn, yytext()); }
+<YYINITIAL> {PORCENTAJE}       {  return new Symbol(sym.PORCENTAJE, yyline, yycolumn, yytext()); }
+<YYINITIAL> {PUNTO_Y_COMA}     {  return new Symbol(sym.PUNTO_Y_COMA, yyline, yycolumn, yytext()); }
+<YYINITIAL> {CARACTER}     {  return new Symbol(sym.CARACTER, yyline, yycolumn, yytext()); }
+<YYINITIAL> {MINUSCULAS}             {  return new Symbol(sym.MINUSCULAS, yyline, yycolumn, yytext()); }
+<YYINITIAL> {MAYUSCULAS}    {  return new Symbol(sym.MAYUSCULAS, yyline, yycolumn, yytext()); }
+<YYINITIAL> {NUMEROS}       {  return new Symbol(sym.NUMEROS, yyline, yycolumn, yytext()); }
+<YYINITIAL> {IDENTIFICADOR}     {  return new Symbol(sym.IDENTIFICADOR, yyline, yycolumn, yytext()); }
+<YYINITIAL> {CADENA}             {  return new Symbol(sym.CADENA, yyline, yycolumn, yytext()); }
+<YYINITIAL> {CARACTERES}     {  return new Symbol(sym.CARACTERES, yyline, yycolumn, yytext()); }
 
 
 
