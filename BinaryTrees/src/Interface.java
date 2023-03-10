@@ -341,6 +341,13 @@ public class Interface extends javax.swing.JFrame {
         String entrada = txtarchivo.getText();
         StringBuilder htmlTable = new StringBuilder();
         try {
+            File folder = new File("src/ARBOLES_202109715/");
+            File[] files = folder.listFiles();
+            if(files != null) { //Si hay archivos en la carpeta
+                for(File file : files) {
+                    file.delete(); //Elimina los archivos existentes
+                }
+            }
             lexico scanner = new lexico(new java.io.StringReader(entrada));
             sintaxis analizador = new sintaxis(scanner);
             analizador.parse();

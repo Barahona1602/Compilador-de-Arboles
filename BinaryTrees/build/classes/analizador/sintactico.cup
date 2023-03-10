@@ -27,7 +27,7 @@ parser code
 
 :}
 
-terminal String CONJ, DOSPUNTOS, GUION, MAYOR, COMA, TILDE, LLAVEA, LLAVEC, CONCATENACION, DISYUNCION, ASTERISCO, SUMA, INTERROGACION, 
+terminal String CONJ, DOSPUNTOS, FLECHA, COMA, TILDE, LLAVEA, LLAVEC, CONCATENACION, DISYUNCION, ASTERISCO, SUMA, INTERROGACION, 
 PORCENTAJE, PUNTO_Y_COMA, IDENTIFICADOR, MINUSCULAS, MAYUSCULAS, NUMEROS, CARACTERES, CARACTER, CADENA;
 
 non terminal codigo;
@@ -40,8 +40,8 @@ codigo::= LLAVEA conjuntos PORCENTAJE PORCENTAJE PORCENTAJE PORCENTAJE comprobac
 conjuntos::= conjuntos instruccion | 
                     instruccion;
 
-instruccion::= CONJ DOSPUNTOS IDENTIFICADOR:hola GUION MAYOR notacion PUNTO_Y_COMA | 
-                        IDENTIFICADOR:hola GUION MAYOR regex:a PUNTO_Y_COMA {:
+instruccion::= CONJ DOSPUNTOS IDENTIFICADOR:hola FLECHA notacion PUNTO_Y_COMA | 
+                        IDENTIFICADOR:hola FLECHA regex:a PUNTO_Y_COMA {:
                              arboles.add(new AFD((arbol)a));
                             :};
 

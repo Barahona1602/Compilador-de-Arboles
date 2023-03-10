@@ -4,12 +4,9 @@
  */
 package analizador;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +17,7 @@ public class AFD {
         private arbol expresiones;
         private int num=1;
         private static int contadorGlobal = 0;
-
+        
         public AFD(arbol expresiones) {
         arbol raiz = new arbol (".");
         arbol aceptacion = new arbol ("\"#\"");
@@ -104,6 +101,48 @@ public class AFD {
                 }
             }
         }
+        
+        public void metodo2(arbol actual){
+            if(actual==null){
+                return;
+            }
+            
+            
+            if (actual.isHoja()){
+                actual.getSiguientes().add(actual.getId());
+                return;
+            }
+            
+            metodo2(actual.getHijoI());
+            metodo2(actual.getHijoD());
+            
+            String datoActual = actual.getDato();
+            switch (datoActual) {
+                case "*" -> {
+                    actual.getSiguientes().addAll(actual.getHijoI().getUltimos());
+
+                }
+                case "+" -> {
+                    actual.getSiguientes().addAll(actual.getHijoI().getUltimos());
+                }
+                case "." -> {
+                    actual.setAnulable(actual.getHijoI().isAnulable() && actual.getHijoD().isAnulable());
+                    if (actual.getHijoI().isAnulable()){
+                        actual.getPrimeros().addAll(actual.getHijoI().getPrimeros());
+                        actual.getPrimeros().addAll(actual.getHijoD().getPrimeros());
+                    } else{
+                        actual.getPrimeros().addAll(actual.getHijoI().getPrimeros());
+                    }   if (actual.getHijoD().isAnulable()){
+                        actual.getUltimos().addAll(actual.getHijoI().getUltimos());
+                        actual.getUltimos().addAll(actual.getHijoD().getUltimos()); 
+                    } else{
+                        actual.getUltimos().addAll(actual.getHijoD().getUltimos());
+                    }
+                }
+                default -> {
+                }
+            }
+        }
     public String crear(arbol nodo, int padre) {
         String g = "";
         num += 1;
@@ -168,7 +207,7 @@ public class AFD {
             contadorGlobal++;
             g += "}\n";
             
-             try {
+             try {     
                 System.out.println("Archivo generado");
                 FileWriter writer = new FileWriter("src/ARBOLES_202109715/"+"arbol"+contadorGlobal+".dot");
                 writer.write(g);
@@ -191,3 +230,5 @@ public class AFD {
         
     }
 }
+
+    

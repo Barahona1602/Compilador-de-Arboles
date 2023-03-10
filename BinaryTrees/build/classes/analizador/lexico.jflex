@@ -28,8 +28,6 @@ import Errores.Excepcion;
 //simbolos
 CONJ = "CONJ"
 DOSPUNTOS = ":"
-GUION = "-"
-MAYOR = ">"
 COMA = ","
 TILDE = "~"
 LLAVEA = "{"
@@ -53,9 +51,10 @@ MINUSCULAS = [a-z]
 MAYUSCULAS = [A-Z]
 NUMEROS =  [0-9]
 CARACTER = (\" {NO_ESCAPADOS} \") | {ESCAPADOS}
-IDENTIFICADOR = [a-zA-Z0-9_]+
+IDENTIFICADOR = [a-zA-Z0-9]+
 CADENA = \"( [^\"] | "\\\"")+\"
-CARACTERES = [!-,.-\/:-=?-@\[-`{-}]
+CARACTERES = [!-\/:-=?-@\[-`{-}]
+FLECHA = "-" {SPACE}* ">"
 
 
 
@@ -72,8 +71,7 @@ CARACTERES = [!-,.-\/:-=?-@\[-`{-}]
 <YYINITIAL> {LLAVEC} {  return new Symbol(sym.LLAVEC, yyline, yycolumn, yytext()); }
 <YYINITIAL> {CONJ}  {   return new Symbol(sym.CONJ, yyline, yycolumn,yytext());  }
 <YYINITIAL> {DOSPUNTOS} {  return new Symbol(sym.DOSPUNTOS, yyline, yycolumn, yytext()); }
-<YYINITIAL> {GUION}  {  return new Symbol(sym.GUION, yyline, yycolumn, yytext()); }
-<YYINITIAL> {MAYOR}  {  return new Symbol(sym.MAYOR, yyline, yycolumn, yytext()); }
+<YYINITIAL> {FLECHA}  {  return new Symbol(sym.FLECHA, yyline, yycolumn, yytext()); }
 <YYINITIAL> {COMA} {  return new Symbol(sym.COMA, yyline, yycolumn, yytext()); }
 <YYINITIAL> {TILDE}   {  return new Symbol(sym.TILDE, yyline, yycolumn, yytext()); }
 <YYINITIAL> {CONCATENACION}    {  return new Symbol(sym.CONCATENACION, yyline, yycolumn, yytext()); }
