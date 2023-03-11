@@ -100,47 +100,7 @@ public class AFD {
             }
         }
         
-        public void metodo2(arbol actual){
-            if(actual==null){
-                return;
-            }
-            
-            
-            if (actual.isHoja()){
-                actual.getSiguientes().add(actual.getId());
-                return;
-            }
-            
-            metodo2(actual.getHijoI());
-            metodo2(actual.getHijoD());
-            
-            String datoActual = actual.getDato();
-            switch (datoActual) {
-                case "*" -> {
-                    actual.getSiguientes().addAll(actual.getHijoI().getUltimos());
-
-                }
-                case "+" -> {
-                    actual.getSiguientes().addAll(actual.getHijoI().getUltimos());
-                }
-                case "." -> {
-                    actual.setAnulable(actual.getHijoI().isAnulable() && actual.getHijoD().isAnulable());
-                    if (actual.getHijoI().isAnulable()){
-                        actual.getPrimeros().addAll(actual.getHijoI().getPrimeros());
-                        actual.getPrimeros().addAll(actual.getHijoD().getPrimeros());
-                    } else{
-                        actual.getPrimeros().addAll(actual.getHijoI().getPrimeros());
-                    }   if (actual.getHijoD().isAnulable()){
-                        actual.getUltimos().addAll(actual.getHijoI().getUltimos());
-                        actual.getUltimos().addAll(actual.getHijoD().getUltimos()); 
-                    } else{
-                        actual.getUltimos().addAll(actual.getHijoD().getUltimos());
-                    }
-                }
-                default -> {
-                }
-            }
-        }
+       
     public String crear(arbol nodo, int padre) {
         String g = "";
         num += 1;
