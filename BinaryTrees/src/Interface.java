@@ -41,6 +41,20 @@ public class Interface extends javax.swing.JFrame {
      */
     public Interface() {
         initComponents();
+        File arboles = new File("src/ARBOLES_202109715/");
+            File[] filesA = arboles.listFiles();
+            if(filesA != null) { //Si hay archivos en la carpeta
+                for(File fileA : filesA) {
+                    fileA.delete(); //Elimina los archivos existentes
+                }
+            }
+         File errores = new File("src/ERRORES_202109715/");
+            File[] filesE = errores.listFiles();
+            if(filesE != null) { //Si hay archivos en la carpeta
+                for(File fileE : filesE) {
+                    fileE.delete(); //Elimina los archivos existentes
+                }
+            }
     }
 
     /**
@@ -127,6 +141,7 @@ public class Interface extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1);
         jScrollPane1.setBounds(20, 150, 910, 370);
 
+        txtconsola.setEditable(false);
         txtconsola.setBackground(new java.awt.Color(185, 195, 196));
         txtconsola.setColumns(20);
         txtconsola.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -341,13 +356,6 @@ public class Interface extends javax.swing.JFrame {
         String entrada = txtarchivo.getText();
         StringBuilder htmlTable = new StringBuilder();
         try {
-            File folder = new File("src/ARBOLES_202109715/");
-            File[] files = folder.listFiles();
-            if(files != null) { //Si hay archivos en la carpeta
-                for(File file : files) {
-                    file.delete(); //Elimina los archivos existentes
-                }
-            }
             lexico scanner = new lexico(new java.io.StringReader(entrada));
             sintaxis analizador = new sintaxis(scanner);
             analizador.parse();
@@ -435,7 +443,9 @@ public class Interface extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
+    public void errores(){
+        
+    }
     private void btnabrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirActionPerformed
     JFileChooser chooser = new JFileChooser();
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivo OLC (*.olc)", "olc");

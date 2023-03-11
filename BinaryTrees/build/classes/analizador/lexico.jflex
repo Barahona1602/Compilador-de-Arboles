@@ -98,5 +98,5 @@ FLECHA = "-" {SPACE}* ">"
         //String errLex = "Error léxico : '"+yytext()+"' en la línea: "+(yyline+1)+" y columna: "+(yycolumn+1);
         //System.out.println(errLex);
         // agregar errores lexicos 
-        erroresLexicos.add(new Excepcion("Léxico","El caracter : '"+yytext()+"'no pertenece al lenguaje: ", Integer.toString(yyline+1), Integer.toString(yycolumn+1)));
+        erroresLexicos.add(new Excepcion("Léxico","El caracter : '"+yytext()+"' no pertenece al lenguaje: ", Integer.toString(yyline+1), Integer.toString(yycolumn+1)));
 }
