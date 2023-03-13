@@ -20,7 +20,6 @@ public class arbol {
     private boolean anulable;
     private ArrayList<Integer> primeros = new ArrayList<>();
     private ArrayList<Integer> ultimos = new ArrayList<>();
-    private ArrayList<Integer> siguientes = new ArrayList<>();
 
     public arbol(String dato) {
         this.dato = dato;
@@ -94,13 +93,5 @@ public class arbol {
         this.titulo = titulo;
     }
 
-    public ArrayList<Integer> getSiguientes() {
-        return siguientes;
-    }
 
-    public void setSiguientes(ArrayList<Integer> siguientes) {
-        this.siguientes = siguientes;
-    }
-
-    
 }

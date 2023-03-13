@@ -10,6 +10,8 @@ parser code
 {:
     /// Arboles 
     public ArrayList<AFD> arboles = new ArrayList <>();
+    public ArrayList<Conjunto> conjuntos = new ArrayList<Conjunto>();
+    public ArrayList<Evaluacion> pruebas = new ArrayList<Evaluacion>();
 
 
     ///  declarar un arraylist para los errores sintacticos 
@@ -40,24 +42,52 @@ codigo::= LLAVEA conjuntos PORCENTAJE PORCENTAJE PORCENTAJE PORCENTAJE comprobac
 conjuntos::= conjuntos instruccion | 
                     instruccion;
 
-instruccion::= CONJ DOSPUNTOS IDENTIFICADOR:hola FLECHA notacion PUNTO_Y_COMA | 
+instruccion::= CONJ DOSPUNTOS IDENTIFICADOR:hola FLECHA notacion:b PUNTO_Y_COMA  {: conjuntos.add(new Conjunto(hola,(ArrayList) b)); :}| 
                         IDENTIFICADOR:hola FLECHA regex:a PUNTO_Y_COMA {:
-                             arboles.add(new AFD((arbol)a));
+                             arboles.add(new AFD(hola, (arbol)a));
                             :};
 
-notacion::= MAYUSCULAS TILDE MAYUSCULAS |
-                MINUSCULAS TILDE MINUSCULAS |
-                NUMEROS TILDE NUMEROS  |    
-                CARACTERES TILDE CARACTERES |
-                agrupacion;
+notacion::= MAYUSCULAS:a TILDE MAYUSCULAS:b {:
+            ArrayList<Integer> nuevo_conjunto = new ArrayList<Integer>();
+            for(int i = (int) a.charAt(0);i<=(int) b.charAt(0);i++){
+                nuevo_conjunto.add(i);
+            }RESULT = nuevo_conjunto;
+            :}|
+                MINUSCULAS:a TILDE MINUSCULAS:b {:
+            ArrayList<Integer> nuevo_conjunto = new ArrayList<Integer>();
+            for(int i = (int) a.charAt(0);i<=(int) b.charAt(0);i++){
+                nuevo_conjunto.add(i);
+            }RESULT = nuevo_conjunto;
+            :}|
+                NUMEROS:a TILDE NUMEROS:b  {:
+            ArrayList<Integer> nuevo_conjunto = new ArrayList<Integer>();
+            for(int i = (int) a.charAt(0);i<=(int) b.charAt(0);i++){
+                nuevo_conjunto.add(i);
+            }RESULT = nuevo_conjunto;
+            :}|    
+                CARACTERES:a TILDE CARACTERES:b {:
+            ArrayList<Integer> nuevo_conjunto = new ArrayList<Integer>();
+            for(int i = (int) a.charAt(0);i<=(int) b.charAt(0);i++){
+                nuevo_conjunto.add(i);
+            }RESULT = nuevo_conjunto;
+            :}|
+                agrupacion:a {:
+                String notacion = (String) a;
+                ArrayList<Integer> nuevo_conjunto = new ArrayList<>();
+                for(int i = 0;i < notacion.length();i++)
+                {
+                   nuevo_conjunto.add((int) notacion.charAt(i));
+                }
+                RESULT = nuevo_conjunto;
+                :};
 
-agrupacion::= agrupacion COMA singular |
-                    singular;
+agrupacion::= agrupacion:a COMA singular:b {:RESULT = (String)a+(String)b;:}|
+                    singular:a {:RESULT = a;:};
 
-singular::= MAYUSCULAS |
-                MINUSCULAS |
-                CARACTERES |
-                NUMEROS;
+singular::= MAYUSCULAS:a {:RESULT = a;:} |
+                MINUSCULAS:a {:RESULT = a;:} |
+                CARACTERES:a {:RESULT = a;:} |
+                NUMEROS:a {:RESULT = a;:};
 
 regex::= CONCATENACION:a regex:b regex:c {:
                     arbol padre = new arbol(a);
@@ -102,4 +132,5 @@ regex::= CONCATENACION:a regex:b regex:c {:
 comprobacion::= comprobacion evaluacion |
                         evaluacion;
 
-evaluacion::= IDENTIFICADOR DOSPUNTOS CADENA PUNTO_Y_COMA;
+evaluacion::= IDENTIFICADOR:a DOSPUNTOS CADENA:b PUNTO_Y_COMA {: pruebas.add(new Evaluacion(a,b));:}|
+                     IDENTIFICADOR:a DOSPUNTOS CARACTER:b PUNTO_Y_COMA {: pruebas.add(new Evaluacion(a,b));:};

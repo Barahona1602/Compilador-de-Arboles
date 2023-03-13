@@ -1,18 +1,20 @@
 
+import analizador.AFD;
+import analizador.Evaluacion;
 import analizador.lexico;
 import analizador.sintaxis;
-import java.awt.BorderLayout;
-import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
@@ -20,7 +22,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -55,6 +56,41 @@ public class Interface extends javax.swing.JFrame {
                     fileE.delete(); //Elimina los archivos existentes
                 }
             }
+         File afnd = new File("src/AFND_202109715/");
+            File[] filesAFND = afnd.listFiles();
+            if(filesAFND != null) { //Si hay archivos en la carpeta
+                for(File fileAfnd : filesAFND) {
+                    fileAfnd.delete(); //Elimina los archivos existentes
+                }
+            }
+         File AFD = new File("src/AFD_202109715/");
+            File[] filesAFD = AFD.listFiles();
+            if(filesAFD != null) { //Si hay archivos en la carpeta
+                for(File fileAFD : filesAFD) {
+                    fileAFD.delete(); //Elimina los archivos existentes
+                }
+            }
+        File SIG = new File("src/SIGUIENTES_202109715/");
+            File[] filesSIG = SIG.listFiles();
+            if(filesSIG != null) { //Si hay archivos en la carpeta
+                for(File fileSIG : filesSIG) {
+                    fileSIG.delete(); //Elimina los archivos existentes
+                }
+            }
+         File TRANS = new File("src/TRANSICIONES_202109715/");
+            File[] filesTRANS = TRANS.listFiles();
+            if(filesTRANS != null) { //Si hay archivos en la carpeta
+                for(File fileTRANS : filesTRANS) {
+                    fileTRANS.delete(); //Elimina los archivos existentes
+                }
+            }
+         File SAL = new File("src/SALIDAS_202109715/");
+            File[] filesSAL = SAL.listFiles();
+            if(filesSAL != null) { //Si hay archivos en la carpeta
+                for(File fileSAL : filesSAL) {
+                    fileSAL.delete(); //Elimina los archivos existentes
+                }
+            }
     }
 
     /**
@@ -80,9 +116,9 @@ public class Interface extends javax.swing.JFrame {
         btnarboles = new javax.swing.JButton();
         btnsig = new javax.swing.JButton();
         btnafd = new javax.swing.JButton();
-        btnerrores = new javax.swing.JButton();
         btntrans = new javax.swing.JButton();
         btnafnd = new javax.swing.JButton();
+        btnerrores = new javax.swing.JButton();
         btnabrir = new javax.swing.JButton();
         btnanalizar = new javax.swing.JButton();
         btngenerar = new javax.swing.JButton();
@@ -203,18 +239,6 @@ public class Interface extends javax.swing.JFrame {
         jPanel5.add(btnafd);
         btnafd.setBounds(20, 260, 184, 50);
 
-        btnerrores.setBackground(new java.awt.Color(204, 102, 0));
-        btnerrores.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnerrores.setText("Errores");
-        btnerrores.setBorder(null);
-        btnerrores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnerroresActionPerformed(evt);
-            }
-        });
-        jPanel5.add(btnerrores);
-        btnerrores.setBounds(20, 420, 184, 50);
-
         btntrans.setBackground(new java.awt.Color(204, 102, 0));
         btntrans.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btntrans.setText("Tabla de transiciones");
@@ -239,6 +263,18 @@ public class Interface extends javax.swing.JFrame {
         jPanel5.add(btnafnd);
         btnafnd.setBounds(20, 340, 184, 50);
 
+        btnerrores.setBackground(new java.awt.Color(204, 102, 0));
+        btnerrores.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnerrores.setText("Errores");
+        btnerrores.setBorder(null);
+        btnerrores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnerroresActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnerrores);
+        btnerrores.setBounds(20, 420, 184, 50);
+
         jPanel2.add(jPanel5);
         jPanel5.setBounds(950, 80, 220, 500);
 
@@ -258,6 +294,11 @@ public class Interface extends javax.swing.JFrame {
         btnanalizar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnanalizar.setText("Analizar gramática");
         btnanalizar.setBorder(null);
+        btnanalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnanalizarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnanalizar);
         btnanalizar.setBounds(480, 540, 200, 40);
 
@@ -331,7 +372,7 @@ public class Interface extends javax.swing.JFrame {
     private void btnarbolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnarbolesActionPerformed
        JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("src/ARBOLES_202109715")); // Ruta específica que quieres abrir
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -351,15 +392,18 @@ public class Interface extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnarbolesActionPerformed
-
+    lexico scanner;
+    sintaxis analizador;
     private void btngenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngenerarActionPerformed
         String entrada = txtarchivo.getText();
+        String salida ="";
         StringBuilder htmlTable = new StringBuilder();
         try {
-            lexico scanner = new lexico(new java.io.StringReader(entrada));
-            sintaxis analizador = new sintaxis(scanner);
+            scanner = new lexico(new java.io.StringReader(entrada));
+            analizador = new sintaxis(scanner);
             analizador.parse();
-            txtconsola.setText("Analisis finalizado");
+            salida += "Análisis de archivos finalizado\n";
+            
 
             // generar reporte de errores lexicos
             if (!scanner.erroresLexicos.isEmpty() || !analizador.erroresSintacticos.isEmpty()) {
@@ -427,17 +471,18 @@ public class Interface extends javax.swing.JFrame {
                 FileWriter writer = new FileWriter("src/ERRORES_202109715/reporteErrores.html");
                 writer.write(reporteErrores);
                 writer.close();
-                System.out.println("Archivo HTML generado con éxito.");
+                salida+=("Se encontraron errores");
             } catch (IOException e) {
-                System.out.println("Ocurrió un error al guardar el archivo HTML: " + e.getMessage());
+                salida+=("Ocurrió un error al guardar el archivo HTML: " + e.getMessage());
             }
             } else {
-                System.out.println("No se encontraron errores léxicos ni sintácticos");
+                salida+=("No se encontraron errores léxicos ni sintácticos");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        txtconsola.setText(salida);
     }//GEN-LAST:event_btngenerarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -509,7 +554,7 @@ public class Interface extends javax.swing.JFrame {
     private void btnsigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsigActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("src/SIGUIENTES_202109715")); // Ruta específica que quieres abrir
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -529,7 +574,7 @@ public class Interface extends javax.swing.JFrame {
     private void btntransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntransActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("src/TRANSICIONES_202109715")); // Ruta específica que quieres abrir
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -549,7 +594,7 @@ public class Interface extends javax.swing.JFrame {
     private void btnafdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnafdActionPerformed
        JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File("src/AFD_202109715")); // Ruta específica que quieres abrir
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos JPG", "jpg"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -566,8 +611,77 @@ public class Interface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnafdActionPerformed
 
+    private void btnafndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnafndActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("src/AFND_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
+
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                ImageIcon imageIcon = new ImageIcon(ImageIO.read(selectedFile));
+                JLabel label = new JLabel(imageIcon);
+                JScrollPane scrollPane = new JScrollPane(label);
+                scrollPane.setPreferredSize(new Dimension(1000, 800));
+                JOptionPane.showMessageDialog(null, scrollPane);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnafndActionPerformed
+        
+    
+    public void generador(String dir, String nombre, String texto) throws IOException {
+        Path filePath = Paths.get(dir, nombre + ".json");
+        File file = filePath.toFile();
+
+        try (PrintWriter writer = new PrintWriter(file)) {
+            writer.print(texto);
+        }
+    }
+   
+    public static String eliminarBarraInversa(String cadena) {
+    return cadena.replace("\\'", "'");
+    }
+    private void btnanalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnanalizarActionPerformed
+        String salida="";
+        String resultados = "[\n";
+        int count = 0; // Contador de objetos JSON
+        for (Evaluacion p : analizador.pruebas) {
+            for (AFD afd : analizador.arboles) {
+                if (afd.getNombre().equals(p.getAfd())) {
+                    boolean res = afd.analizar_cadena(analizador.conjuntos, p.getCadena());
+                    String cadenaSinBarra = eliminarBarraInversa(p.getCadena());
+                    resultados += "{\n"
+                            + "\"Valor\": "+cadenaSinBarra+",\n"
+                            + "\"Expresion_regular\": \""+p.getAfd()+"\",\n"
+                            + "\"Cadena Valida\": \""+res+"\"\n"
+                            + "}";
+                    // Verificar si es el último objeto JSON en la lista
+                    if (++count < analizador.pruebas.size()) {
+                        resultados += ","; // Agregar coma solo si no es el último
+                    }
+                    if(res){
+                        salida += "La expresión: "+ p.getCadena()+" es válida con la expresión Regular "+ p.getAfd()+"\n";
+                    } else{
+                        salida += "La expresión: "+ p.getCadena()+" no es válida con la expresión Regular "+ p.getAfd()+"\n";
+                    }
+                    break;
+                }
+            }
+        }
+        resultados+="]\n"; // Agregar corchete de cierre
+        txtconsola.setText( salida+"Analisis finalizado");
+        try {
+            generador("src/SALIDAS_202109715/", "Reporte", resultados);
+        } catch (IOException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnanalizarActionPerformed
+
     private void btnerroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnerroresActionPerformed
-         try {
+        try {
             File file = new File("src/ERRORES_202109715/reporteErrores.html");
             JEditorPane editorPane = new JEditorPane();
             editorPane.setPage(file.toURI().toURL());
@@ -583,10 +697,6 @@ public class Interface extends javax.swing.JFrame {
             txtconsola.setText("No hay errores en el árbol");
     }
     }//GEN-LAST:event_btnerroresActionPerformed
-
-    private void btnafndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnafndActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnafndActionPerformed
 
     /**
      * @param args the command line arguments
