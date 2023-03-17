@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
@@ -42,57 +43,46 @@ public class Interface extends javax.swing.JFrame {
      */
     public Interface() {
         initComponents();
-        File arboles = new File("src/ARBOLES_202109715/");
-            File[] filesA = arboles.listFiles();
-            if(filesA != null) { //Si hay archivos en la carpeta
-                for(File fileA : filesA) {
-                    fileA.delete(); //Elimina los archivos existentes
-                }
-            }
-         File errores = new File("src/ERRORES_202109715/");
-            File[] filesE = errores.listFiles();
-            if(filesE != null) { //Si hay archivos en la carpeta
-                for(File fileE : filesE) {
-                    fileE.delete(); //Elimina los archivos existentes
-                }
-            }
-         File afnd = new File("src/AFND_202109715/");
-            File[] filesAFND = afnd.listFiles();
-            if(filesAFND != null) { //Si hay archivos en la carpeta
-                for(File fileAfnd : filesAFND) {
-                    fileAfnd.delete(); //Elimina los archivos existentes
-                }
-            }
-         File AFD = new File("src/AFD_202109715/");
-            File[] filesAFD = AFD.listFiles();
-            if(filesAFD != null) { //Si hay archivos en la carpeta
-                for(File fileAFD : filesAFD) {
-                    fileAFD.delete(); //Elimina los archivos existentes
-                }
-            }
-        File SIG = new File("src/SIGUIENTES_202109715/");
-            File[] filesSIG = SIG.listFiles();
-            if(filesSIG != null) { //Si hay archivos en la carpeta
-                for(File fileSIG : filesSIG) {
-                    fileSIG.delete(); //Elimina los archivos existentes
-                }
-            }
-         File TRANS = new File("src/TRANSICIONES_202109715/");
-            File[] filesTRANS = TRANS.listFiles();
-            if(filesTRANS != null) { //Si hay archivos en la carpeta
-                for(File fileTRANS : filesTRANS) {
-                    fileTRANS.delete(); //Elimina los archivos existentes
-                }
-            }
-         File SAL = new File("src/SALIDAS_202109715/");
-            File[] filesSAL = SAL.listFiles();
-            if(filesSAL != null) { //Si hay archivos en la carpeta
-                for(File fileSAL : filesSAL) {
-                    fileSAL.delete(); //Elimina los archivos existentes
-                }
-            }
+        crearCarpetas();
     }
+    public void crearCarpetas() {
+    // Nombres de las carpetas a crear
+    String[] carpetas = {"ARBOLES_202109715", "AFND_202109715", "SIGUIENTES_202109715", 
+                         "TRANSICIONES_202109715", "AFD_202109715", "SALIDAS_202109715", 
+                         "ERRORES_202109715"};
 
+    // Obtenemos la ruta absoluta de la carpeta donde se está ejecutando la aplicación
+    String currentPath = System.getProperty("user.dir");
+
+    // Creamos los objetos File para las carpetas
+    for (String carpeta : carpetas) {
+        File folder = new File(currentPath, carpeta);
+
+        // Si la carpeta existe, la borramos junto con todo su contenido para volver a crearla
+        if (folder.exists()) {
+            deleteDirectory(folder);
+        }
+
+        // Creamos la carpeta
+        folder.mkdirs();
+    }
+}
+
+public static void deleteDirectory(File directory) {
+    if (directory.exists()) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        directory.delete();
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -371,7 +361,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnarbolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnarbolesActionPerformed
        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("src/ARBOLES_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setCurrentDirectory(new File("ARBOLES_202109715")); // Ruta específica que quieres abrir
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
@@ -399,7 +389,7 @@ public class Interface extends javax.swing.JFrame {
         String salida ="";
         StringBuilder htmlTable = new StringBuilder();
         try {
-            scanner = new lexico(new java.io.StringReader(entrada));
+            scanner = new lexico(new StringReader(entrada));
             analizador = new sintaxis(scanner);
             analizador.parse();
             salida += "Análisis de archivos finalizado\n";
@@ -468,7 +458,7 @@ public class Interface extends javax.swing.JFrame {
             if (htmlTable.length() > 0) {
             String reporteErrores = htmlTable.toString();
             try {
-                FileWriter writer = new FileWriter("src/ERRORES_202109715/reporteErrores.html");
+                FileWriter writer = new FileWriter("ERRORES_202109715/reporteErrores.html");
                 writer.write(reporteErrores);
                 writer.close();
                 salida+=("Se encontraron errores");
@@ -482,7 +472,17 @@ public class Interface extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        txtconsola.setText(salida);
+        for (AFD afd : analizador.arboles) {
+            try {
+                afd.Ejecutar();
+            } catch (IOException ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                txtconsola.setText(salida);
+            }
+        
     }//GEN-LAST:event_btngenerarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -553,7 +553,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnsigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsigActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("src/SIGUIENTES_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setCurrentDirectory(new File("SIGUIENTES_202109715")); // Ruta específica que quieres abrir
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
@@ -573,7 +573,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btntransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntransActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("src/TRANSICIONES_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setCurrentDirectory(new File("TRANSICIONES_202109715")); // Ruta específica que quieres abrir
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
@@ -593,7 +593,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnafdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnafdActionPerformed
        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("src/AFD_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setCurrentDirectory(new File("AFD_202109715")); // Ruta específica que quieres abrir
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
@@ -613,7 +613,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnafndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnafndActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("src/AFND_202109715")); // Ruta específica que quieres abrir
+        fileChooser.setCurrentDirectory(new File("AFND_202109715")); // Ruta específica que quieres abrir
         fileChooser.setFileFilter(new FileNameExtensionFilter("Archivos PNG", "png"));
 
         int result = fileChooser.showOpenDialog(null);
@@ -651,7 +651,7 @@ public class Interface extends javax.swing.JFrame {
         for (Evaluacion p : analizador.pruebas) {
             for (AFD afd : analizador.arboles) {
                 if (afd.getNombre().equals(p.getAfd())) {
-                    boolean res = afd.analizar_cadena(analizador.conjuntos, p.getCadena());
+                    boolean res = afd.analisis(analizador.conjuntos, p.getCadena());
                     String cadenaSinBarra = eliminarBarraInversa(p.getCadena());
                     resultados += "{\n"
                             + "\"Valor\": "+cadenaSinBarra+",\n"
@@ -663,18 +663,18 @@ public class Interface extends javax.swing.JFrame {
                         resultados += ","; // Agregar coma solo si no es el último
                     }
                     if(res){
-                        salida += "La expresión: "+ p.getCadena()+" es válida con la expresión Regular "+ p.getAfd()+"\n";
+                        salida += "La expresión: "+ p.getCadena()+" es válida con la expresión regular "+ p.getAfd()+"\n";
                     } else{
-                        salida += "La expresión: "+ p.getCadena()+" no es válida con la expresión Regular "+ p.getAfd()+"\n";
+                        salida += "La expresión: "+ p.getCadena()+" no es válida con la expresión regular "+ p.getAfd()+"\n";
                     }
                     break;
                 }
             }
         }
         resultados+="]\n"; // Agregar corchete de cierre
-        txtconsola.setText( salida+"Analisis finalizado");
+        txtconsola.setText( salida+"Analisis de gramática finalizado");
         try {
-            generador("src/SALIDAS_202109715/", "Reporte", resultados);
+            generador("SALIDAS_202109715/", "Reporte", resultados);
         } catch (IOException ex) {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -682,7 +682,7 @@ public class Interface extends javax.swing.JFrame {
 
     private void btnerroresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnerroresActionPerformed
         try {
-            File file = new File("src/ERRORES_202109715/reporteErrores.html");
+            File file = new File("ERRORES_202109715/reporteErrores.html");
             JEditorPane editorPane = new JEditorPane();
             editorPane.setPage(file.toURI().toURL());
             JScrollPane scrollPane = new JScrollPane(editorPane);

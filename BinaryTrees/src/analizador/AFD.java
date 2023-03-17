@@ -28,9 +28,9 @@ public class AFD {
     private ArrayList<ArrayList> ListaTransiciones = new ArrayList<>();
     private ArrayList<Integer> Aceptado = new ArrayList<>();
     private String thmps = "";
-    private int num_nodo = 0;
-    private int nodos_thompson =1;
-    private int num_hoja = 0;
+    private int numN = 0;
+    private int nodosT =1;
+    private int numH = 0;
 
     public arbol getExpresiones() {
         return expresiones;
@@ -45,7 +45,6 @@ public class AFD {
         
         this.expresiones = raiz;
         this.nombre = nombre;
-        Ejecutar();
     }
 
     public void asignar(arbol actual) {
@@ -55,8 +54,8 @@ public class AFD {
         asignar(actual.getHijoI());
         asignar(actual.getHijoD());
         if (actual.isHoja()) {
-            actual.setId(num_hoja);
-            num_hoja++;
+            actual.setId(numH);
+            numH++;
             ListaSiguientes.add(new Siguientes(actual.getDato(), actual.getId()));
             if (!ListaTerminales.contains(actual.getDato()) && !actual.getDato().equals("#")) {
                 ListaTerminales.add(actual.getDato());
@@ -178,73 +177,73 @@ public class AFD {
         String g = "";
 
         if (actual.isHoja()) {
-            g += "N_" + primero + " -> N_" + ultimo + "[label=\"" + actual.getDato().replaceAll("\"", "") + "\"];\n";
+            g += "S" + primero + " -> S" + ultimo + "[label=\"" + actual.getDato().replaceAll("\"", "") + "\"];\n";
             return g;
         }
 
         switch (actual.getDato()) {
             case "." -> {
-                nodos_thompson += 1;
-                int mitad = nodos_thompson;
-                g += "N_" + nodos_thompson + "[label = \"\"];\n";
+                nodosT += 1;
+                int mitad = nodosT;
+                g += "S" + nodosT+ ";\n";
                 g += crearAFND(primero, mitad, actual.getHijoI());
                 g += crearAFND(mitad, ultimo, actual.getHijoD());
             }
             case "|" -> {
-                nodos_thompson += 1;
-                int pos_izq = nodos_thompson;
-                g += "N_" + pos_izq + "[label = \"\"];\n";
-                g += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
-                nodos_thompson += 1;
-                int pos_der = nodos_thompson;
-                g += "N_" + pos_der + "[label = \"\"];\n";
-                g += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_izq = nodosT;
+                g += "S" + pos_izq + ";\n";
+                g += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_der = nodosT;
+                g += "S" + pos_der + ";\n";
+                g += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
                 g += crearAFND(pos_izq, pos_der, actual.getHijoI());
-                nodos_thompson += 1;
-                pos_izq = nodos_thompson;
-                g += "N_" + pos_izq + "[label = \"\"];\n";
-                g += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
-                nodos_thompson += 1;
-                pos_der = nodos_thompson;
-                g += "N_" + pos_der + "[label = \"\"];\n";
-                g += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                nodosT += 1;
+                pos_izq = nodosT;
+                g += "S" + pos_izq + ";\n";
+                g += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
+                nodosT += 1;
+                pos_der = nodosT;
+                g += "S" + pos_der + ";\n";
+                g += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
                 g += crearAFND(pos_izq, pos_der, actual.getHijoD());
             }
             case "+" -> {
-                nodos_thompson += 1;
-                int pos_izq = nodos_thompson;
-                g += "N_" + pos_izq + "[label = \"\"];\n";
-                g += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
-                nodos_thompson += 1;
-                int pos_der = nodos_thompson;
-                g += "N_" + pos_der + "[label = \"\"];\n";
-                g += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
-                g += "N_" + pos_der + " -> N_" + pos_izq + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_izq = nodosT;
+                g += "S" + pos_izq + ";\n";
+                g += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_der = nodosT;
+                g += "S" + pos_der + ";\n";
+                g += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
+                g += "S" + pos_der + " -> S" + pos_izq + "[label=\"ε\"];\n";
                 g += crearAFND(pos_izq, pos_der, actual.getHijoI());
             }
             case "*" -> {
-                nodos_thompson += 1;
-                int pos_izq = nodos_thompson;
-                g += "N_" + pos_izq + "[label = \"\"];\n";
-                g += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
-                g += "N_" + primero + " -> N_" + ultimo + "[label=\"ε\"];\n";
-                nodos_thompson += 1;
-                int pos_der = nodos_thompson;
-                g += "N_" + pos_der + "[label = \"\"];\n";
-                g += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
-                g += "N_" + pos_der + " -> N_" + pos_izq + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_izq = nodosT;
+                g += "S" + pos_izq + ";\n";
+                g += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
+                g += "S" + primero + " -> S" + ultimo + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_der = nodosT;
+                g += "S" + pos_der + ";\n";
+                g += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
+                g += "S" + pos_der + " -> S" + pos_izq + "[label=\"ε\"];\n";
                 g += crearAFND(pos_izq, pos_der, actual.getHijoI());
             }
             case "?" -> {
-                nodos_thompson += 1;
-                int pos_izq = nodos_thompson;
-                g += "N_" + pos_izq + "[label = \"\"];\n";
-                g += "N_" + primero + " -> N_" + pos_izq + "[label=\"ε\"];\n";
-                g += "N_" + primero + " -> N_" + ultimo + "[label=\"ε\"];\n";
-                nodos_thompson += 1;
-                int pos_der = nodos_thompson;
-                g += "N_" + pos_der + "[label = \"\"];\n";
-                g += "N_" + pos_der + " -> N_" + ultimo + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_izq = nodosT;
+                g += "S" + pos_izq + ";\n";
+                g += "S" + primero + " -> S" + pos_izq + "[label=\"ε\"];\n";
+                g += "S" + primero + " -> S" + ultimo + "[label=\"ε\"];\n";
+                nodosT += 1;
+                int pos_der = nodosT;
+                g += "S" + pos_der + ";\n";
+                g += "S" + pos_der + " -> S" + ultimo + "[label=\"ε\"];\n";
                 g += crearAFND(pos_izq, pos_der, actual.getHijoI());
             }
         }
@@ -253,11 +252,11 @@ public class AFD {
     
     public String crearArbol(arbol nodo, int padre) {
         String g = "";
-        num_nodo += 1;
+        numN += 1;
 
-        int actual = num_nodo;
+        int actual = numN;
         if (nodo == null) {
-            num_nodo -= 1;
+            numN -= 1;
             return g;
         }
 
@@ -364,10 +363,10 @@ public class AFD {
         return g;
     }
         
-        public String g_afd() {
+        public String crearAFD() {
         String g = "rankdir=\"LR\";\n"
                 + "node [shape=\"circle\"];\n"
-                + "SI[shape = none, label=\"\"];";
+                + "SI[shape = none, ];";
         for (int i = 0; i < ListaTransiciones.size(); i++) {
             if (((ArrayList<ArrayList>) ListaTransiciones.get(i)).get(0).contains(ListaSiguientes.size() - 1)) {
                 g += "S" + i + "[shape=\"doublecircle\"];\n";
@@ -391,7 +390,7 @@ public class AFD {
         return g;
     }
     
-    public boolean analizar_cadena(ArrayList<Conjunto> conjuntos, String cadena) {
+    public boolean analisis(ArrayList<Conjunto> conjuntos, String cadena) {
         int num_estado = 0;
         int caracter;
         int num_col;
@@ -487,18 +486,20 @@ public class AFD {
     public String getNombre() {
         return nombre;
     }
+    
+    
         public void Ejecutar() throws IOException, InterruptedException {
         asignar(expresiones);
         metodo(expresiones);
-        generador("src/ARBOLES_202109715/", nombre, "digraph{label = \"Arbol de expresión\"\n" + crearArbol(expresiones, 0) + "}");
+        generador("ARBOLES_202109715/", nombre, "digraph{label = \"Arbol de expresión\"\n" + crearArbol(expresiones, 0) + "}");
         thmps += "digraph {label = \"AFND " 
                 + "\";\nrankdir=\"LR\";\nnode [shape=\"circle\"];"
-                + "\nN_0[label=\"\"];\n"
-                + "\nN_1[shape = doublecircle, label=\"\"];\n" + crearAFND(0, 1, expresiones.getHijoI()) + "}";
-        generador("src/AFND_202109715/", nombre, thmps);
-        generador("src/SIGUIENTES_202109715/", nombre, "graph{"+crearSiguientes()+"}");
+                + "\nS0[];\n"
+                + "\nS1[shape = doublecircle, ];\n" + crearAFND(0, 1, expresiones.getHijoI()) + "}";
+        generador("AFND_202109715/", nombre, thmps);
+        generador("SIGUIENTES_202109715/", nombre, "graph{"+crearSiguientes()+"}");
         Transiciones();
-        generador("src/TRANSICIONES_202109715/",  nombre, "graph{"+crearTransiciones()+"}");
-        generador("src/AFD_202109715/", nombre, "digraph {label = \"AFD " + nombre + "\"\n" + g_afd()+"}");
+        generador("TRANSICIONES_202109715/",  nombre, "graph{"+crearTransiciones()+"}");
+        generador("AFD_202109715/", nombre, "digraph {label = \"AFD " + nombre + "\"\n" + crearAFD()+"}");
     }
 }
