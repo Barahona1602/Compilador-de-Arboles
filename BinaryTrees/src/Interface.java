@@ -388,6 +388,13 @@ public static void deleteDirectory(File directory) {
         String entrada = txtarchivo.getText();
         String salida ="";
         StringBuilder htmlTable = new StringBuilder();
+        File SAL = new File("ERRORES_202109715/");
+            File[] filesSAL = SAL.listFiles();
+            if(filesSAL != null) { //Si hay archivos en la carpeta
+                for(File fileSAL : filesSAL) {
+                    fileSAL.delete(); //Elimina los archivos existentes
+                }
+            }
         try {
             scanner = new lexico(new StringReader(entrada));
             analizador = new sintaxis(scanner);
@@ -468,7 +475,7 @@ public static void deleteDirectory(File directory) {
             } else {
                 salida+=("No se encontraron errores léxicos ni sintácticos");
             }
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -480,9 +487,9 @@ public static void deleteDirectory(File directory) {
             } catch (InterruptedException ex) {
                 Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
             }
-                txtconsola.setText(salida);
+                
             }
-        
+        txtconsola.setText(salida);
     }//GEN-LAST:event_btngenerarActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -672,7 +679,7 @@ public static void deleteDirectory(File directory) {
             }
         }
         resultados+="]\n"; // Agregar corchete de cierre
-        txtconsola.setText( salida+"Analisis de gramática finalizado");
+        txtconsola.setText( salida);
         try {
             generador("SALIDAS_202109715/", "Reporte", resultados);
         } catch (IOException ex) {

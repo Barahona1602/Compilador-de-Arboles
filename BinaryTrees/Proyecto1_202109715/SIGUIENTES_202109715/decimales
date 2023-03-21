@@ -1,0 +1,55 @@
+graph{label=<
+ <TABLE border="1" cellspacing="0" cellpadding="10"  >
+  <TR>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> Simbolo </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> Hoja </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> Siguientes </b></font></TD>
+  </TR>
+ <TR>
+  <TD>digito</TD>
+  <TD>0</TD>
+  <TD> [0, 1]</TD>
+  </TR>
+ <TR>
+  <TD>"."</TD>
+  <TD>1</TD>
+  <TD> [2]</TD>
+  </TR>
+ <TR>
+  <TD>digito</TD>
+  <TD>2</TD>
+  <TD> [2, 3]</TD>
+  </TR>
+ <TR>
+  <TD>#</TD>
+  <TD>3</TD>
+  <TD> []</TD>
+  </TR>
+ </TABLE>>}graph{label=<
+ <TABLE border="1" cellspacing="0" cellpadding="10"  >
+  <TR>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> Simbolo </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> Hoja </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> Siguientes </b></font></TD>
+  </TR>
+ <TR>
+  <TD>digito</TD>
+  <TD>0</TD>
+  <TD> [0, 1]</TD>
+  </TR>
+ <TR>
+  <TD>"."</TD>
+  <TD>1</TD>
+  <TD> [2]</TD>
+  </TR>
+ <TR>
+  <TD>digito</TD>
+  <TD>2</TD>
+  <TD> [2, 3]</TD>
+  </TR>
+ <TR>
+  <TD>#</TD>
+  <TD>3</TD>
+  <TD> []</TD>
+  </TR>
+ </TABLE>>}

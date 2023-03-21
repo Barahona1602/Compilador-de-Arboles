@@ -1,0 +1,49 @@
+graph{label=<
+ <TABLE border="1" cellspacing="2" cellpadding="10"  >
+  <TR>
+  <TD rowspan="2" bgcolor="#c5e1a5"> <font color="black"><b> Estado </b></font></TD>
+  <TD colspan="3" bgcolor="#c5e1a5"> <font color="black"><b> Terminales </b></font></TD>
+  </TR>
+  <TR>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> abecedarioMinus </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> "_" </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> digito </b></font></TD>
+  </TR>
+  
+  <TR>
+  <TD>S0 [0]</TD>
+  <TD>S1</TD>
+  <TD> [] </TD>
+  <TD> [] </TD>
+  </TR>
+  <TR>
+  <TD>S1 [1, 2, 3, 4]</TD>
+  <TD>S1</TD>
+  <TD>S1</TD>
+  <TD>S1</TD>
+  </TR>
+ </TABLE>>}graph{label=<
+ <TABLE border="1" cellspacing="2" cellpadding="10"  >
+  <TR>
+  <TD rowspan="2" bgcolor="#c5e1a5"> <font color="black"><b> Estado </b></font></TD>
+  <TD colspan="3" bgcolor="#c5e1a5"> <font color="black"><b> Terminales </b></font></TD>
+  </TR>
+  <TR>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> abecedarioMinus </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> "_" </b></font></TD>
+  <TD bgcolor="#c5e1a5"> <font color="black"><b> digito </b></font></TD>
+  </TR>
+  
+  <TR>
+  <TD>S0 [0]</TD>
+  <TD>S1</TD>
+  <TD> [] </TD>
+  <TD> [] </TD>
+  </TR>
+  <TR>
+  <TD>S1 [1, 2, 3, 4]</TD>
+  <TD>S1</TD>
+  <TD>S1</TD>
+  <TD>S1</TD>
+  </TR>
+ </TABLE>>}

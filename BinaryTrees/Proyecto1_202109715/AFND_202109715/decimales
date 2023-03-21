@@ -1,0 +1,43 @@
+digraph {label = "AFND ";
+rankdir="LR";
+node [shape="circle"];
+S0[];
+
+S1[shape = doublecircle, ];
+S2;
+S3;
+S0 -> S3[label="ε"];
+S4;
+S4 -> S2[label="ε"];
+S4 -> S3[label="ε"];
+S3 -> S4[label="digito"];
+S5;
+S2 -> S5[label="."];
+S6;
+S5 -> S6[label="ε"];
+S7;
+S7 -> S1[label="ε"];
+S7 -> S6[label="ε"];
+S6 -> S7[label="digito"];
+}digraph {label = "AFND ";
+rankdir="LR";
+node [shape="circle"];
+S0[];
+
+S1[shape = doublecircle, ];
+S2;
+S3;
+S0 -> S3[label="ε"];
+S4;
+S4 -> S2[label="ε"];
+S4 -> S3[label="ε"];
+S3 -> S4[label="digito"];
+S5;
+S2 -> S5[label="."];
+S6;
+S5 -> S6[label="ε"];
+S7;
+S7 -> S1[label="ε"];
+S7 -> S6[label="ε"];
+S6 -> S7[label="digito"];
+}
